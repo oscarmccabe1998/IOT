@@ -4,6 +4,7 @@ import ctypes
 import json
 import time 
 import subprocess
+from Capture import takePhoto
 
 class pin(ctypes.Structure):
     _fields_ = [
@@ -108,24 +109,16 @@ def unlockDoor(interface):
 def checkForGuest(interface):
     buttonPin = pin()
     buttonPin.pin = 23
-    #buttonPin.value = 0
-    state = interface.readFromGPIO(buttonPin)
-    print(state)
-    test = os.open("/sys/class/gpio/gpio23/value", os.O_RDWR)
-    print(test)
     while True:
-        print("response from driver:", interface.readFromGPIO(buttonPin))
-        test2 = subprocess.getoutput('dmesg | grep "piirq: led state is :" | tail -1')
-        splitval = test2.split(" : [")
-        res = splitval[1][0]
-        if int(res) == 1:
+        state = interface.readFromGPIO(buttonPin)
+        if int(state) == 1:
+            takePhoto()
             print("Someone is here")
             time.sleep(5)
             resetButton = pin()
             resetButton.pin = 23
             resetButton.value = 0
             interface.writeToGPIO(resetButton)
-        print(res)
 
 
 

@@ -44,7 +44,7 @@ int __init piirq_init(void){
 	   gpio_request(Led, "Led");
 	   gpio_direction_output(Led, 1);
 	   /* Make it appear in /sys/class/gpio/gpio16 for echo 0 > value */
-	   gpio_export(Led, false);
+	   //gpio_export(Led, false);
 	   gpio_request(Button, "Button");
 	   gpio_direction_input(Button);
 	   gpio_set_debounce(Button, 500); /* Adjust this number to sync with circut */
