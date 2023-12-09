@@ -47,7 +47,9 @@ class DriverOperations:
         res = fcntl.ioctl(self.fd, self.GPIO_READ, apin)
         print(res)
         print("read pin, check dmesg")
-        return res
+        print("look here")
+        print("pin number", apin.pin, "value", apin.value)
+        return apin.value
 
     def initGPIOState(self):
         pass
@@ -101,6 +103,7 @@ def unlockDoor(interface):
     for item in deviceList:
         interface.writeToGPIO(item)
     print("door open")
+    interface.readFromGPIO(ableToEnter)
 
 def checkForGuest(interface):
     buttonPin = pin()
@@ -111,6 +114,7 @@ def checkForGuest(interface):
     test = os.open("/sys/class/gpio/gpio23/value", os.O_RDWR)
     print(test)
     while True:
+        print("response from driver:", interface.readFromGPIO(buttonPin))
         test2 = subprocess.getoutput('dmesg | grep "piirq: led state is :" | tail -1')
         splitval = test2.split(" : [")
         res = splitval[1][0]
