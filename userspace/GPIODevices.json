@@ -1,0 +1,18 @@
+{
+    "indicator_pins":[
+        {
+            "Device_Name": "Door_Open_LED",
+            "Pin_Number" : 3
+        },
+        {
+            "Device_Name": "Door_Closed_LED",
+            "Pin_Number" : 18
+        }
+    ],
+    "Device_pins":[
+        {
+            "Device_Name": "Door_Relay",
+            "Pin_Number": 2
+        }
+    ]
+}
